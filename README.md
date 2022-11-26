@@ -1,4 +1,11 @@
 # Ambulance Planning DVA Project
+## Backend Setup Instructions
+### Pre-Processed Data Population
+Navigate to the DVA Group Project Google Drive, and download `aggregate_trip_times.csv`, `hourly_trip_times.csv`, `mix_match_population.csv`, and `only_text_population.csv`. Next, create a folder called `data` within `backend/`, and move these files there.
+### Installing Python Packages
+This project uses Python 3.10 or higher. To install all needed packages, navigate to `backend/` and run `pip install -r requirements.txt`.
+### Running the Flask app
+To run the Flask app in order to make the Backend RESTful API available, simply navigate to `backend/` and run `flask --app main run`
 
 ## Frontend Setup Instructions
 ### Prerequisites
