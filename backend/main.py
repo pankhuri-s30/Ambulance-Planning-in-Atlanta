@@ -17,4 +17,4 @@ def getOptimalPlacement():
     max_runtime = get_or_default(request.args, default_dict, 'max_runtime') # max amount of time, in seconds, the algorithm is permitted to run
     calls_per_day = get_or_default(request.args, default_dict, 'calls_per_day')
     random_seed = get_or_default(request.args, default_dict, 'random_seed')
-    return optimal_placement(num_ambulances, min_time, max_time, calls_per_day, random_seed)
+    return optimal_placement(num_ambulances, min_time, max_time, calls_per_day, random_seed, max_runtime).to_json()
