@@ -6,9 +6,16 @@ print('loading backend data...')
 aggregate_times = pd.read_csv('./data/aggregate_trip_times.csv')
 hourly_times = pd.read_csv('./data/hourly_trip_times.csv')
 population_data = pd.read_csv('./data/mix_match_population.csv') #pd.read_csv('./data/only_text_population.csv')
+hospital_data = pd.read_csv('./data/hospital_counts.csv', dtype=np.int32)
+hospital_names_and_loc = pd.read_csv('./data/hospital_data.csv')
+tract_centroid_data = pd.read_csv('./data/tract_centroids.csv')
 aggregate_map = aggregate_times.set_index(['srcid','dstid'])['mean_trip_time'].to_dict()
 hourly_map = hourly_times.set_index(['srcid','dstid','start_hour'])['mean_trip_time'].to_dict()
 population_map = population_data.set_index(['tract'])['population'].to_dict()
+hospital_map = hospital_data.set_index(['tract'])['count'].to_dict()
+tract_centroid_map = tract_centroid_data.set_index(['tract'])[['x', 'y']].to_dict()
+tract_centroid_map = {i: [tract_centroid_map['x'][i], tract_centroid_map['y'][i]] for i in range(1, 832)}
+hospital_names_and_loc_arr = hospital_names_and_loc.to_numpy().tolist()
 
 pop_counts = np.array([0] + [population_map[k] for k in range(1, 832)])
 cumulative_pop_counts = np.cumsum(pop_counts)
@@ -46,8 +53,7 @@ def generate_requests(min_time: int, max_time: int, requests_per_day: int) -> li
     arr.sort(key=lambda t: t[0])
     return arr
 
-hospital_locations = {1 + i * 40: 1 for i in range(20)}
-hospital_location_list = np.array(list(hospital_locations.keys()))
+hospital_location_list = np.array(list(hospital_map.keys()))
 nearest_hospitals = {}
 for srcid in range(1, 832):
     for h in [0, 7, 16, 19]:

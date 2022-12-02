@@ -13,7 +13,7 @@ class AmbulanceMapping:
         self.response_time_per_region = 0
 
     def __str__(self):
-        return str(self.mapping)
+        return f'{self.average_response_time},{str(self.mapping)}'
 
     def run_simulation(self, requests: list[(int, int)], min_time: int, max_time: int):
         free_list = Counter(self.mapping)

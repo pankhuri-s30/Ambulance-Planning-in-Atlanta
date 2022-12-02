@@ -29,7 +29,6 @@ def shake(ambulance_mapping: AmbulanceMapping, k: int, k_max: int) -> AmbulanceM
         new_counter = Counter()
         for k in key_set:
             if k in selected_keys:
-                print(np.where(selected_keys == k), np.where(selected_keys == k)[0])
                 new_counter[k] = mapping[shuffled[np.where(selected_keys == k)[0][0]]]
             else:
                 new_counter[k] = mapping[k]

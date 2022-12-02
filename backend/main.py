@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 
 from ambulance_calculations import optimal_placement
+from data import hospital_names_and_loc_arr, tract_centroid_map
 
 app = Flask(__name__)
 
@@ -18,3 +19,10 @@ def getOptimalPlacement():
     calls_per_day = get_or_default(request.args, default_dict, 'calls_per_day')
     random_seed = get_or_default(request.args, default_dict, 'random_seed')
     return optimal_placement(num_ambulances, min_time, max_time, calls_per_day, random_seed, max_runtime).to_json()
+
+@app.route('/getLatLongData', methods=['GET'])
+def getLatLongData():
+    return  {
+        'hospital_data': hospital_names_and_loc_arr,
+        'tract_centroids': tract_centroid_map
+    }
