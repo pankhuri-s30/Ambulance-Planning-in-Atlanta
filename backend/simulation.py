@@ -3,6 +3,9 @@ import numpy as np
 from data import generate_requests
 from data import nearest_hospitals, get_estimated_trip_time, hour_conversion
 
+# This object initially just stores the Counter representing the ambulance mapping. The ambulance_counter
+# is a dictionary from the census tract ID (int) to the number of ambulances assigned to the tract (int)
+# All metrics (average_response_time, worst_response_time, etc) are 0 until run_simulation is executed
 class AmbulanceMapping:
 
     def __init__(self, ambulance_counter: Counter):
@@ -25,12 +28,16 @@ class AmbulanceMapping:
         second_interval = 15
         max_seek = 3600 # process all requests no more than an hour after max_time
         min_index = 0
+        # we go a bit beyond the max time to process all ambulances responding to calls near the end of the time interval
         for t in range(min_time, max_time + max_seek + 1, second_interval):
             h = t // 3600
+            # first, we get all requests at time <= t that we have not dealt with and copy them to need_help
             matching_indexes = [i for i in range(min_index, len(requests)) if requests[i][0] > t]
             max_index = len(requests) if len(matching_indexes) == 0 else matching_indexes[0]
             need_help += requests[min_index:max_index]
             to_remove = []
+            # next, if any ambulances traveling to patients have arrived, we add the time they took to get there (along with location of the call) to trip_times
+            # and then we move the ambulance to to_hosp
             for i in range(len(to_patient)):
                 data = to_patient[i]
                 if data[1] >= t:
@@ -40,6 +47,7 @@ class AmbulanceMapping:
                     to_hosp.append((data[0], data[1], data[1] + nearest_hosp[1], data[2], nearest_hosp[0], data[3]))
             to_patient = [to_patient[i] for i in range(len(to_patient)) if i not in to_remove]
             to_remove = []
+            # if any ambulances have reached the hospital, we send them back to their originally assigned tract
             for i in range(len(to_hosp)):
                 data = to_hosp[i]
                 if data[2] >= t:
@@ -49,6 +57,7 @@ class AmbulanceMapping:
                     returning_from_hosp.append((data[2] + estimated_time, data[3]))
             to_hosp = [to_hosp[i] for i in range(len(to_hosp)) if i not in to_remove]
             to_remove = []
+            # once an ambulance is backed to its assigned tract, it gets added back to the free_list counter
             for i in range(len(returning_from_hosp)):
                 data = returning_from_hosp[i]
                 if data[0] >= t:
@@ -60,8 +69,11 @@ class AmbulanceMapping:
             for i in range(len(need_help)):
                 request = need_help[i]
                 if avail_ambulances > 0:
+                    # get the estimated time for all available ambulances to reach the current request
                     free_tracts = [(k, get_estimated_trip_time(k, request[1], h)) for k in free_list.keys() if free_list[k] > 0]
                     selected_ambulance = min(free_tracts, key=lambda tup:tup[1])
+                    # send the closest ambulance to the current request, mark the current request for removal from need_help since
+                    # it has been answered, and remove the ambulance from free_list until it is done with the request
                     to_patient.append((t, t + selected_ambulance[1], selected_ambulance[0], request[1]))
                     to_remove.append(i)
                     free_list[selected_ambulance[0]] -= 1
@@ -77,6 +89,7 @@ class AmbulanceMapping:
                 response_time_map[tract].append(response_time)
             else:
                 response_time_map[tract] = [response_time]
+        # mapping of census tract to float, which is the average response time for calls originating from that tract
         self.response_time_per_tract = {}
         for k in response_time_map.keys():
             arr = response_time_map[k]
@@ -88,9 +101,9 @@ class AmbulanceMapping:
 
     def to_json(self) -> dict:
         return {
-            'mapping': self.mapping,
-            'average_response_time': self.average_response_time,
-            'worst_response_time': self.worst_response_time,
-            'response_time_per_tract': self.response_time_per_tract,
-            'response_time_per_region': self.response_time_per_region,
+            'mapping': self.mapping, # mapping from census tract (int) to number of ambulances assigned to that tract (int)
+            'average_response_time': self.average_response_time, # float, average response time across all tracts
+            'worst_response_time': self.worst_response_time, # float, worst response time across all tracts
+            'response_time_per_tract': self.response_time_per_tract, # mapping from census tract (int) to average response time for that tract (float)
+            'response_time_per_region': self.response_time_per_region, # not currently supported
         }
