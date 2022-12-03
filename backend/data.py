@@ -43,7 +43,7 @@ for i in range(24):
     else:
         hour_conversion[i] = 19
 
-# for any trip starting and ending at the same tract, we generate an estimated trip time between 0.5 and 1.5 minutes
+# for any trip starting and ending at the same tract, we generate an estimated trip time between 0.5 and 3 minutes
 def get_intra_travel_noise() -> float:
     return np.random.randint(30, 180)
 
