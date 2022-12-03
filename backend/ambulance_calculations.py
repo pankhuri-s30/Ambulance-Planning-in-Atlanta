@@ -62,10 +62,10 @@ def optimal_placement(num_ambulances: int, min_time: int, max_time: int, request
     best_ambulance_mapping = AmbulanceMapping(Counter([np.random.randint(1, 832) for _ in range(num_ambulances)]))
     best_ambulance_mapping.run_simulation(requests, min_time, max_time)
     time_init = int(time.time())
-    max_k_value = 8 # todo experiment with this to find the best value
-    # We currently take the first mapping with an average response time <= 8 minutes, but this can be adjusted
+    max_k_value = 8 # mak k value for VNS - todo experiment with this to find the best value
+    goal_response_time = 480 # We currently take the first mapping with an average response time <= 8 minutes, but this can be adjusted
     # This is VNS exactly as described in the paper
-    while int(time.time()) - time_init < max_runtime and best_ambulance_mapping.average_response_time > 480:
+    while int(time.time()) - time_init < max_runtime and best_ambulance_mapping.average_response_time > goal_response_time:
         for k in range(1, max_k_value + 1):
             x_prime = shake(best_ambulance_mapping, k, max_k_value)
             x_prime.run_simulation(requests, min_time, max_time)
