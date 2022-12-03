@@ -54,9 +54,23 @@
   padding: 20px;
 }
 
-.float-child {
-  width: 50%;
+.float-child-left {
+  width: 40%;
   float: left;
   padding: 20px;
   /* border: 2px solid red; */
 }  
+
+
+.float-child {
+  width: 60%;
+  float: left;
+  padding: 20px;
+  /* border: 2px solid red; */
+}  
+
+.map-container {
+  width: 800px !important;
+  height: 500px !important;
+  /* float; */
+}
