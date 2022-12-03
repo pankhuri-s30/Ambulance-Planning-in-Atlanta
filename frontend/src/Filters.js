@@ -10,22 +10,9 @@ import React, { Component, useEffect, useState } from 'react';
 // import { useState } from "react";
 // import { MakeApiCall } from './App';
 import Results from './Results';
-import { render } from '@testing-library/react';
 import axios from 'axios';
 // import { getAllHospitals } from './MapsDisplay';
-
-function MakeApiCall(payload) {
-  // const [isLoading, setLoading] = useState(true);
-  // const [hospData, setHospData] = useState([]);
-  axios.get(`http://127.0.0.1:5000/getOptimalPlacement`, { payload })
-  .then(res => {
-    console.log('Response from POST call: ', res);
-    return res;
-    // console.log(res.data);
-  })
-  // const response = ['yas'];
-  // return response;
-}
+import { Space, Spin } from 'antd';
 
 
 const Filters = ({setAmbulanceMapping}) => {
@@ -109,8 +96,8 @@ const Filters = ({setAmbulanceMapping}) => {
     <InputGroup>
         <InputGroup.Text id="basic-addon1">Number of Ambulances</InputGroup.Text>
         <Form.Control
-          placeholder="20"
-          aria-label="20"
+          placeholder="50"
+          aria-label="50"
           aria-describedby="basic-addon1"
           onChange={(event) => setAmbulanceCountOption(event.target.value)}
         />
@@ -139,6 +126,12 @@ const Filters = ({setAmbulanceMapping}) => {
     <br />
     <Button as="input" type="submit" value="Simulate" disabled={isButtonClicked}
     onClick = {onSubmitButtonClick}/>
+    
+    {isButtonClicked && 
+    <Space size="middle">
+    <Spin size="large" style={{"marginLeft": 20}}/>
+    </Space>
+    }
     {isTableVisible && <Results tableData={tableData} avgRespTime={avgRespTime} visible={isTableVisible} worstRespTime={worstRespTime} />}
     </>
   );

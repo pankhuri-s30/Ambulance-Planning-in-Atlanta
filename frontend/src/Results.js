@@ -9,38 +9,25 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { Component } from 'react';
 import { useState } from "react";
 import { Table } from 'antd';
+function  toTime(seconds) {
+  var date = new Date(null);
+  date.setSeconds(seconds);
+  return date.toISOString().substr(11, 8);
+}
+
 const Results = ({tableData}) => {
+  
     var state = {tableData: tableData};
     console.log('State inside Results component: ', state);
 
     const dataSources = []
     const num_of_vehicles = state.tableData?.mapping
-    // console.log('NUM OF VEHICLES: ', num_of_vehicles)
     Object.keys(state.tableData?.response_time_per_tract).
     map((key, index) => (
-      dataSources.push({key: key, id: key, time: state.tableData?.response_time_per_tract[key], count: num_of_vehicles[key] || 0})
+      dataSources.push({key: key, id: key, time: toTime(state.tableData?.response_time_per_tract[key]), count: num_of_vehicles[key] || 0})
      ));
     console.log('Datasources: ', dataSources);
-    const dataSource = [
-        {
-          key: '1',
-          id: 1,
-          count: 32,
-          time: 9.5,
-        },
-        {
-          key: '2',
-          id: 2,
-          count: 42,
-          time: 10.5,
-        },
-        {
-            key: '3',
-            id: 3,
-            count: 32,
-            time: 9.5,
-        },
-      ];
+  
       
       const columns = [
         {
@@ -63,15 +50,16 @@ const Results = ({tableData}) => {
   return (
     <>
     
-    <div className="float-container">
+    <div style={{marginTop: 30}}>
     <h4>Results:</h4>
     <hr />
     {/* <hr /> */}
-    <div style={{color: "green"}}><b>Average response time: {state.tableData?.average_response_time}</b></div> 
+    <div style={{color: "green"}}><b>Average response time: {toTime(state.tableData?.average_response_time)}</b></div> 
     <br />
-    <div style={{color: "grey"}}><b>Worst case response time: {state.tableData?.worst_response_time}</b></div> 
+    <div style={{color: "grey"}}><b>Worst case response time: {toTime(state.tableData?.worst_response_time)}</b></div> 
     </div>
-    <div style={{width: 600, marginLeft: 30}}>
+    <br />
+    <div style={{width: 600}}>
     <Table dataSource={dataSources} columns={columns} pagination={{ pageSize: 3 }}/>
     </div>
     </>

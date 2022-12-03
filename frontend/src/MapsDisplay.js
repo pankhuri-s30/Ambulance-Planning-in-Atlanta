@@ -29,20 +29,18 @@ class MapsDisplay extends Component {
     }
     render() {
       var iconMarker = new window.google.maps.MarkerImage(
-        // "https://banner2.cleanpng.com/20180802/ogy/kisspng-computer-icons-clip-art-wellington-free-ambulance-red-ambulance-2-icon-free-red-ambulance-icons-5b62eff4306dc0.5741596215332106121984.jpg",
         "./ambulance.png",
         //"https://banner2.cleanpng.com/20180227/vre/kisspng-ambulance-drawing-royalty-free-clip-art-cartoon-ambulance-5a95c90894ac30.060721161519765768609.jpg",
-        // "https://thumbs.dreamstime.com/z/ambulance-icon-vector-illustration-template-design-isolated-white-background-flat-website-logo-sign-symbol-app-ui-182207231.jpg",
         null, /* size is determined at runtime */
         null, /* origin is 0,0 */
         null, /* anchor is bottom center of the scaled image */
-        new window.google.maps.Size(50, 50)
+        new window.google.maps.Size(30, 30)
     );
   
     return (
       <div>
         <Map className= 'map-container' google={this.state.google} 
-          zoom={12}
+          zoom={10}
           initialCenter={{lat: 33.694275, lng: -84.272163}}>
           {console.log('All Places: ', this.state)}
           {this.state.hosps.map(place => {
