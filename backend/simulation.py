@@ -100,10 +100,13 @@ class AmbulanceMapping:
         return self.average_response_time
 
     def to_json(self) -> dict:
+        print(type(self.average_response_time), type(self.worst_response_time), type(self.response_time_per_tract), type(self.response_time_per_region))
+        mapping_to_return = {int(i): int(self.mapping[i]) for i in self.mapping.keys() if self.mapping[i] > 0}
+        response_time_per_tract = {int(i): float(self.response_time_per_tract[i]) for i in self.response_time_per_tract.keys()}
         return {
-            'mapping': self.mapping, # mapping from census tract (int) to number of ambulances assigned to that tract (int)
-            'average_response_time': self.average_response_time, # float, average response time across all tracts
-            'worst_response_time': self.worst_response_time, # float, worst response time across all tracts
-            'response_time_per_tract': self.response_time_per_tract, # mapping from census tract (int) to average response time for that tract (float)
+            'mapping': mapping_to_return, # mapping from census tract (int) to number of ambulances assigned to that tract (int)
+            'average_response_time': float(self.average_response_time), # float, average response time across all tracts
+            'worst_response_time': float(self.worst_response_time), # float, worst response time across all tracts
+            'response_time_per_tract': response_time_per_tract, # mapping from census tract (int) to average response time for that tract (float)
             'response_time_per_region': self.response_time_per_region, # not currently supported
         }
