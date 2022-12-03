@@ -28,12 +28,13 @@ function MakeApiCall(payload) {
 }
 
 
-const Filters = () => {
+const Filters = ({setAmbulanceMapping}) => {
   const [countyOption, setCountyOption] = useState("1");
   const [timeOption, setTimeOption] = useState("1");
   const [amPmOption, setAmPmOption] = useState("AM");
-  const [ambulanceCountOption, setAmbulanceCountOption] = useState(0);
-  const [callsPerDay, setcallsPerDay] = useState(0);
+  const [ambulanceCountOption, setAmbulanceCountOption] = useState(20);
+  const [maxRunningTimeOption, setMaxRunningTimeOption] = useState(30);
+  const [callsPerDay, setcallsPerDay] = useState(2000);
   const [tableData, setTableData] = useState([]);
   const [avgRespTime, setAvgRespTime] = useState(0);
   const [worstRespTime, setWorstRespTime] = useState(0);
@@ -43,49 +44,34 @@ const Filters = () => {
   const [payloadData, setPayloadData] = useState([]);
   const [isTableVisible, setIsTableVisible] = useState(false);
 
-
-  const handleChangeCounty = (selectedOption) => {
-    setCountyOption(selectedOption);
-  }
-  const handleChangeTime = (selectedOption) => {
-    setTimeOption(selectedOption);
-  }
-  const handleChangeAmPm = (selectedOption) => {
-    setAmPmOption(selectedOption);
-  }
-  const handleChangeAmbulanceCount = (selectedOption) => {
-    setAmbulanceCountOption(selectedOption);
-  }
-  const handleChangeCallsCount = (selectedOption) => {
-    setcallsPerDay(selectedOption);
-  }
   useEffect((payload = {}) => {
-    axios.get(`http://127.0.0.1:5000/getOptimalPlacement`).then(response => {
-      var table = response.data;
-      setTableData(table);
-      setAvgRespTime(table.data?.average_response_time);
-      setWorstRespTime(table.data?.worst_response_time);
-      render (isButtonClicked && <Results tableData={tableData} avgRespTime={avgRespTime} visible={isTableVisible} worstRespTime={worstRespTime} />)
-    });
+    
   }, [payloadData, isButtonClicked]);
   // console.log('IsButtonClicked: ', isButtonClicked);
 
  const onSubmitButtonClick = () => {
-   const toSend = {
-    'County': countyOption,
-    'Start time': timeOption,
-    'AM/PM': amPmOption,
-    'num_ambulances': ambulanceCountOption,
-    'calls_per_day': callsPerDay
-   };
-   console.log('Payload for GET optimal times call: ', toSend);
-   setPayloadData(toSend);
-
-  // Another way to set it??
-  setIsButtonClicked(!isButtonClicked);
-  setIsTableVisible(!isTableVisible);
- 
+    if (!isButtonClicked) {
+      setIsButtonClicked(true);
+      const toSend = {
+        'num_ambulances': ambulanceCountOption,
+        //'min_time': 0,
+        //'max_time': 0,
+        'calls_per_day': callsPerDay,
+        'max_runtime': maxRunningTimeOption,
+      };
+      axios.get(`http://127.0.0.1:5000/getOptimalPlacement`, {params: toSend}).then(response => {
+        var table = response.data;
+        setTableData(table);
+        setAvgRespTime(response.data?.average_response_time);
+        setWorstRespTime(response.data?.worst_response_time);
+        setAmbulanceMapping(response.data?.mapping);
+        setIsButtonClicked(false);
+        setIsTableVisible(true);
+      }).catch(e => {setIsButtonClicked(false)});
+    }
   }
+
+  console.log('tableData', tableData);
 
   return (
     <>
@@ -93,7 +79,7 @@ const Filters = () => {
     <InputGroup>
     <InputGroup.Text id="basic-addon1" >Census</InputGroup.Text>
     <select className="form-select" aria-label="Default select example"
-    onChange={(event) => handleChangeCounty(event.target.value)}
+    onChange={(event) => setCountyOption(event.target.value)}
     >    
         <option selected value='1'>1</option>
         <option value="Gwinnett">Gwinnett</option>
@@ -106,7 +92,7 @@ const Filters = () => {
     <InputGroup>
     <InputGroup.Text id="basic-addon1">Time of Day</InputGroup.Text>
     <select className="form-select"
-    onChange={(event) => handleChangeTime(event.target.value)}>
+    onChange={(event) => setTimeOption(event.target.value)}>
         <option value = "12">12 to 1</option>
         <option value="1">1 to 2</option>
         <option value="2">2 to 3</option>
@@ -114,7 +100,7 @@ const Filters = () => {
         <option selected value="4">4 to 5</option>
     </select>
     <select className="form-select"
-    onChange={(event) => handleChangeAmPm(event.target.value)}>
+    onChange={(event) => setAmPmOption(event.target.value)}>
         <option selected value="AM">AM</option>
         <option value="PM">PM</option>
     </select>
@@ -126,33 +112,34 @@ const Filters = () => {
           placeholder="20"
           aria-label="20"
           aria-describedby="basic-addon1"
-          onChange={(event) => handleChangeAmbulanceCount(event.target.value)}
+          onChange={(event) => setAmbulanceCountOption(event.target.value)}
         />
       </InputGroup>
       <br />
       <InputGroup>
-        <InputGroup.Text id="basic-addon1">Minimum Running Time</InputGroup.Text>
+        <InputGroup.Text id="basic-addon1">Maximum Running Time</InputGroup.Text>
         <Form.Control
-          placeholder="10"
-          aria-label="10"
+          placeholder="30"
+          aria-label="30"
           aria-describedby="basic-addon1"
-          onChange={(event) => handleChangeAmbulanceCount(event.target.value)}
+          onChange={(event) => setMaxRunningTimeOption(event.target.value)}
         />
       </InputGroup>
       <br />
       <InputGroup>
         <InputGroup.Text id="basic-addon1">Total # of Calls Per Day</InputGroup.Text>
         <Form.Control
-          placeholder="5"
-          aria-label="5"
+          placeholder="2000"
+          aria-label="2000"
           aria-describedby="basic-addon1"
-          onChange={(event) => handleChangeCallsCount(event.target.value)}
+          onChange={(event) => setcallsPerDay(event.target.value)}
         />
       </InputGroup>
     </div>
     <br />
-    <Button as="input" type="submit" value="Simulate"
+    <Button as="input" type="submit" value="Simulate" disabled={isButtonClicked}
     onClick = {onSubmitButtonClick}/>
+    {isTableVisible && <Results tableData={tableData} avgRespTime={avgRespTime} visible={isTableVisible} worstRespTime={worstRespTime} />}
     </>
   );
 }

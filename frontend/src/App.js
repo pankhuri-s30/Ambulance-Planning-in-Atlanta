@@ -32,8 +32,10 @@ export function OLDMakeApiCall(payload) {
 function App() {
   // const MapWrapped = withScriptjs(withGoogleMap(Maps));
 
-const [isLoading, setLoading] = useState(true);
-const [hospData, setHospData] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [hospData, setHospData] = useState([]);
+  const [centroidData, setCentroidData] = useState({});
+  const [ambulanceMapping, setAmbulanceMapping] = useState({});
 
   useEffect(() => {
     axios.get('http://127.0.0.1:5000/getLatLongData').then(response => {
@@ -49,6 +51,7 @@ const [hospData, setHospData] = useState([]);
       })
       setHospData(places);
       setLoading(false);
+      setCentroidData(response.data?.tract_centroids);
     });
   }, []);
 
@@ -56,9 +59,8 @@ const [hospData, setHospData] = useState([]);
     return <div className="App">Loading...</div>;
   }
   // return hospData;
-  console.log('HospData: ', hospData)
-
-
+  console.log('HospData: ', hospData);
+  console.log('amb mapping', ambulanceMapping);
 
   if (hospData.length > 1){
     console.log('Executing this')
@@ -67,15 +69,15 @@ const [hospData, setHospData] = useState([]);
     <div>
       <header className='App-header'>Optimizing Ambulance Response Times</header>
       <div className="float-container">
-        <div class="float-child-left">
+        <div className="float-child-left">
           <div className='lhs_filters'>
-            <Filters/>
+            <Filters setAmbulanceMapping={setAmbulanceMapping}/>
           </div>
         </div>
-        <div class="float-child">
+        <div className="float-child">
           {/* <img src={require('./atlanta-img.png')} /> */}
           <div className='map-container'>
-        <MapsDisplay hosps={hospData}/>
+        <MapsDisplay hosps={hospData} centroidData={centroidData} ambulanceMapping={ambulanceMapping}/>
         {/* <MapContainer /> */}
         </div>
       </div>
