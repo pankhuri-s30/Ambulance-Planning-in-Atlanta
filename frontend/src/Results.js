@@ -12,6 +12,15 @@ import { Table } from 'antd';
 const Results = ({tableData}) => {
     var state = {tableData: tableData};
     console.log('State inside Results component: ', state);
+
+    const dataSources = []
+    const num_of_vehicles = state.tableData?.mapping
+    // console.log('NUM OF VEHICLES: ', num_of_vehicles)
+    Object.keys(state.tableData?.response_time_per_tract).
+    map((key, index) => (
+      dataSources.push({key: key, id: key, time: state.tableData?.response_time_per_tract[key], count: num_of_vehicles[key] || 0})
+     ));
+    console.log('Datasources: ', dataSources);
     const dataSource = [
         {
           key: '1',
@@ -31,18 +40,6 @@ const Results = ({tableData}) => {
             count: 32,
             time: 9.5,
         },
-        {
-        key: '4',
-        id: 4,
-        count: 42,
-        time: 10.5,
-        },
-        {
-            key: '5',
-            id: 5,
-            count: 10,
-            time: 12.5,
-            },
       ];
       
       const columns = [
@@ -67,13 +64,15 @@ const Results = ({tableData}) => {
     <>
     
     <div className="float-container">
+    <h4>Results:</h4>
     <hr />
-    <hr />
-    <div class="float-child-left"><b>Average response time: {state.tableData?.average_response_time}</b></div> 
-    <div class="float-child"><b>Worst case response time: {state.tableData?.worst_response_time}</b></div> 
+    {/* <hr /> */}
+    <div style={{color: "green"}}><b>Average response time: {state.tableData?.average_response_time}</b></div> 
+    <br />
+    <div style={{color: "grey"}}><b>Worst case response time: {state.tableData?.worst_response_time}</b></div> 
     </div>
-    <div style={{width: 500, marginLeft: 30}}>
-    <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 3 }}/>
+    <div style={{width: 600, marginLeft: 30}}>
+    <Table dataSource={dataSources} columns={columns} pagination={{ pageSize: 3 }}/>
     </div>
     </>
   );
