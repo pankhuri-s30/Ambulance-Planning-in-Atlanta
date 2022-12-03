@@ -14,23 +14,25 @@ def shake(ambulance_mapping: AmbulanceMapping, k: int, k_max: int) -> AmbulanceM
             for _ in range(mapping[key]):
                 counts_expanded.append(key)
         flattened = np.array(counts_expanded)
-        to_move = np.random.choice(flattened, k + 2, replace=False)
+        amount = min([k + 2, flattened.shape[0]])
+        to_move = np.random.choice(flattened, amount, replace=False)
         new_counter = Counter(mapping)
         for item in to_move:
             new_counter[item] -= 1
-        for _ in range(k + 2):
+        for _ in range(amount):
             new_counter[np.random.randint(1, 832)] += 1
         return AmbulanceMapping(new_counter)
     else:
-        key_set = list([k for k in mapping.keys() if mapping[k] > 0])
-        selected_keys = np.random.choice(np.array(key_set), k - 1, replace=False)
+        key_set = list([key for key in mapping.keys() if mapping[key] > 0])
+        amount = min([k - 1, len(key_set)])
+        selected_keys = np.random.choice(np.array(key_set), amount, replace=False)
         shuffled = np.random.permutation(selected_keys)
         new_counter = Counter()
-        for k in key_set:
-            if k in selected_keys:
-                new_counter[k] = mapping[shuffled[np.where(selected_keys == k)[0][0]]]
+        for key in key_set:
+            if key in selected_keys:
+                new_counter[key] = mapping[shuffled[np.where(selected_keys == key)[0][0]]]
             else:
-                new_counter[k] = mapping[k]
+                new_counter[key] = mapping[key]
         return AmbulanceMapping(new_counter)
 
 def first_improvement(ambulance_mapping: AmbulanceMapping, min_time: int, max_time: int, requests: list[(int, int)]) -> AmbulanceMapping:
