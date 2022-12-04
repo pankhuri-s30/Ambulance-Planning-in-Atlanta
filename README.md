@@ -10,6 +10,10 @@ To run the Flask app in order to make the Backend RESTful API available, simply 
 ## Frontend Setup Instructions
 ### Prerequisites
 In order to run the following available scripts, you must have the Node Package Manager (NPM) installed. Then, from command-line you can navigate to the `frontend/` directory and run any of the scripts described below.
+
+#### `pip install npm`
+#### `cd dva-project-fall22-main/frontend/`
+
 ### Available Scripts
 
 In the project directory, you can run:
