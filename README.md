@@ -12,8 +12,10 @@ To run the Flask app in order to make the Backend RESTful API available for the 
 ### Installing Frontend Packages
 In order to run the following available scripts, you must have the Node Package Manager (NPM) installed. Then, from command-line you can navigate to the `frontend/` directory and run any of the scripts described below.
 
-You can download NPM from the command line using the command below or from [here](https://nodejs.org/en/download/) 
-#### `pip install npm`
+You can download NPM from [here](https://nodejs.org/en/download/) and follow the instructions
+
+Post that also run to install the required scripts
+#### `npm install`
 
 ## Run the React Frontend
 
@@ -25,37 +27,11 @@ This runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-#### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-#### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-#### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Simulation
 When the frontend app is run, the application looks like below 
 <img width="1100" alt="Before Simulation" src="https://user-images.githubusercontent.com/114882302/205470420-73f11878-536b-4482-98f2-b7a9b4bdf67c.png">
 
 You can enter the metrics as required and then click on `Simulate` to get the results. A sample image is as shown below
-<img width="1366" alt="After Simulation" src="https://user-images.githubusercontent.com/114882302/205470625-fa22a36a-09ec-4978-a131-cad58c21bf4a.png">
+![After Simulation](https://user-images.githubusercontent.com/114882302/205523214-8ba597d1-d385-4d05-84b5-bdbc0ca57f75.jpeg)
 
