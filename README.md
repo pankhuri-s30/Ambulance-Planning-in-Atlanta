@@ -1,4 +1,4 @@
-# Ambulance Planning DVA Project
+# Visualizing and Optimizing Ambulance Planning in Atlanta
 ## Setup Prerequisites
 ### Download Pre-Processed Data Population
 Navigate to this [link](https://drive.google.com/drive/folders/1cVqRoRTbFaDZaBMS9EDYjCnak8DGYawN?usp=share_link) and download the files in the `data` folder within the `backend/` directory.
@@ -57,4 +57,5 @@ When the frontend app is run, the application looks like below
 <img width="1100" alt="Before Simulation" src="https://user-images.githubusercontent.com/114882302/205470420-73f11878-536b-4482-98f2-b7a9b4bdf67c.png">
 
 You can enter the metrics as required and then click on `Simulate` to get the results. A sample image is as shown below
-<img width="1100" alt="After Simulation" src="https://user-images.githubusercontent.com/114882302/205470537-38423fe2-9a40-4b7d-9f63-04bcae5052c8.png">
+<img width="1366" alt="After Simulation" src="https://user-images.githubusercontent.com/114882302/205470625-fa22a36a-09ec-4978-a131-cad58c21bf4a.png">
+
