@@ -54,9 +54,36 @@
   padding: 20px;
 }
 
+.float-child-left {
+  width: 40%;
+  float: left;
+  padding: 20px;
+  margin-top: 30px;
+  /* border: 2px solid red; */
+}  
+
+
 .float-child {
-  width: 50%;
+  width: 60%;
   float: left;
   padding: 20px;
   /* border: 2px solid red; */
 }  
+
+.map-container {
+  width: 800px !important;
+  height: 600px !important;
+  /* float; */
+}
+.wrapper {
+  /* width: fit-content; */
+  width: 800;
+  height: fit-content;
+  border: 1px solid rgb(225, 224, 224);
+  margin-top: 10px;
+  background: white;
+  text-align: left;
+  margin-top: 10;
+  padding: 1%;
+  /* max-height: 100px; */
+}
