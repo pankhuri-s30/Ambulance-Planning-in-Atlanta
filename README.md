@@ -7,7 +7,7 @@ Navigate to this [link](https://drive.google.com/drive/folders/1cVqRoRTbFaDZaBMS
 This project uses Python 3.10 or higher. To install all needed packages, navigate to `backend/` and run `pip install -r requirements.txt`.
 
 ### Running the Flask app
-To run the Flask app in order to make the Backend RESTful API available for the UI, simply navigate to `backend/` and run `flask --app main run`
+To run the Flask app in order to make the Backend RESTful API available for the UI, simply navigate to `backend/` and run `flask --app main run` via terminal or command prompt
 
 ### Installing Frontend Packages
 In order to run the following available scripts, you must have the Node Package Manager (NPM) installed. Then, from command-line you can navigate to the `frontend/` directory and run any of the scripts described below.
@@ -17,7 +17,7 @@ You can download NPM from the command line using the command below or from [here
 
 ## Run the React Frontend
 
-In the project directory, you run the command:
+In a new terminal or command prompt window from the project directory, run the command below to start the application:
 
 #### `npm start`
 
