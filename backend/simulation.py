@@ -14,13 +14,21 @@ class AmbulanceMapping:
         self.worst_response_time = 0
         self.response_time_per_tract = 0
         self.response_time_per_region = 0
+        self.response_times_per_interval = []
+        self.trip_times = []
 
     def __str__(self):
-        return f'{self.average_response_time},{str(self.mapping)}'
+        response_times_per_interval = []
+        for h in [0, 6, 12, 18]:
+            start_time = h * 3600
+            end_time = (h + 6) * 3600 - 1
+            avg = np.average(np.array([t[0] for t in self.trip_times if t[-1] >= start_time and t[-1] <= end_time]))
+            response_times_per_interval.append(avg)
+        return f'{self.average_response_time},{str(response_times_per_interval)},{str(self.worst_response_time)},{str(self.mapping)},{str(self.response_time_per_tract)}'
 
     def run_simulation(self, requests: list[(int, int)], min_time: int, max_time: int):
         free_list = Counter(self.mapping)
-        to_patient = [] # (time of dispatch, time of arrival, original tract, destination tract)
+        to_patient = [] # (time of dispatch, time of arrival, original tract, destination tract, original time of request)
         to_hosp = [] # (time of dispatch, time of dispatch from scene, time of arrival, original tract, destinaion tract, tract of request)
         returning_from_hosp = [] # (time of arrival, destination tract)
         need_help = [] # subset of requests, which is (time, tract)
@@ -30,7 +38,7 @@ class AmbulanceMapping:
         min_index = 0
         # we go a bit beyond the max time to process all ambulances responding to calls near the end of the time interval
         for t in range(min_time, max_time + max_seek + 1, second_interval):
-            h = t // 3600
+            h = (t // 3600) % 24
             # first, we get all requests at time <= t that we have not dealt with and copy them to need_help
             matching_indexes = [i for i in range(min_index, len(requests)) if requests[i][0] > t]
             max_index = len(requests) if len(matching_indexes) == 0 else matching_indexes[0]
@@ -43,7 +51,7 @@ class AmbulanceMapping:
                 if data[1] >= t:
                     to_remove.append(i)
                     nearest_hosp = nearest_hospitals[(data[3], hour_conversion[h])]
-                    trip_times.append((data[1] - data[0], data[3]))
+                    trip_times.append((data[1] - data[4], data[3], data[4]))
                     to_hosp.append((data[0], data[1], data[1] + nearest_hosp[1], data[2], nearest_hosp[0], data[3]))
             to_patient = [to_patient[i] for i in range(len(to_patient)) if i not in to_remove]
             to_remove = []
@@ -74,7 +82,7 @@ class AmbulanceMapping:
                     selected_ambulance = min(free_tracts, key=lambda tup:tup[1])
                     # send the closest ambulance to the current request, mark the current request for removal from need_help since
                     # it has been answered, and remove the ambulance from free_list until it is done with the request
-                    to_patient.append((t, t + selected_ambulance[1], selected_ambulance[0], request[1]))
+                    to_patient.append((t, t + selected_ambulance[1], selected_ambulance[0], request[1], request[0]))
                     to_remove.append(i)
                     free_list[selected_ambulance[0]] -= 1
                     avail_ambulances -= 1
@@ -84,7 +92,8 @@ class AmbulanceMapping:
         self.average_response_time = np.average(trip_times_numpy)
         self.worst_response_time = np.max(trip_times_numpy)
         response_time_map = {}
-        for response_time, tract in trip_times:
+        self.trip_times = trip_times
+        for response_time, tract, _ in trip_times:
             if tract in response_time_map.keys():
                 response_time_map[tract].append(response_time)
             else:
