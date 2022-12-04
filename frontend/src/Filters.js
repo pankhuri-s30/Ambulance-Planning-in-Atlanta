@@ -75,7 +75,7 @@ const Filters = ({setAmbulanceMapping}) => {
         <option value="Fayette">Fayette</option>
     </select>
     </InputGroup> */}
-      <br />
+      {/* <br /> */}
     <InputGroup>
     <InputGroup.Text id="basic-addon1">Time of Day</InputGroup.Text>
     <select className="form-select"

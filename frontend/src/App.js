@@ -61,14 +61,14 @@ function App() {
   }
   // return hospData;
   console.log('HospData: ', hospData);
-  console.log('amb mapping', ambulanceMapping);
+  // console.log('amb mapping', ambulanceMapping);
 
   if (hospData.length > 1){
     console.log('Executing this')
   return (
     <>
     <div>
-      <header className='App-header'>Optimizing Ambulance Response Times</header>
+      <header className='App-header'>Atlanta Ambulance Planning : Simulation and Visualization</header>
       <div >
         <div className="float-child-left">
           <div className='lhs_filters'>

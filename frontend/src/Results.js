@@ -36,7 +36,7 @@ const Results = ({tableData}) => {
           key: 'id',
         },
         {
-          title: '# of Ambulances',
+          title: 'Number of Ambulances',
           dataIndex: 'count',
           key: 'count',
         },
