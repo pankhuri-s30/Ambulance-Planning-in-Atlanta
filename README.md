@@ -1,26 +1,27 @@
 # Ambulance Planning DVA Project
-## Backend Setup Instructions
-### Pre-Processed Data Population
-Navigate to the DVA Group Project Google Drive, and download `aggregate_trip_times.csv`, `hourly_trip_times.csv`, `mix_match_population.csv`, `only_text_population.csv`, `tract_centroids.csv`, `hospital_counts.csv`, and `hospital_data.csv`. Next, create a folder called `data` within `backend/`, and move these files there.
+## Setup Prerequisites
+### Download Pre-Processed Data Population
+Navigate to this [link](https://drive.google.com/drive/folders/1cVqRoRTbFaDZaBMS9EDYjCnak8DGYawN?usp=share_link) and download the files in the `data` folder within the `backend/` directory.
+
 ### Installing Python Packages
 This project uses Python 3.10 or higher. To install all needed packages, navigate to `backend/` and run `pip install -r requirements.txt`.
-### Running the Flask app
-To run the Flask app in order to make the Backend RESTful API available, simply navigate to `backend/` and run `flask --app main run`
 
-## Frontend Setup Instructions
-### Prerequisites
+### Running the Flask app
+To run the Flask app in order to make the Backend RESTful API available for the UI, simply navigate to `backend/` and run `flask --app main run`
+
+### Installing Frontend Packages
 In order to run the following available scripts, you must have the Node Package Manager (NPM) installed. Then, from command-line you can navigate to the `frontend/` directory and run any of the scripts described below.
 
+You can download NPM from the command line using the command below or from [here](https://nodejs.org/en/download/) 
 #### `pip install npm`
-#### `cd dva-project-fall22-main/frontend/`
 
-### Available Scripts
+## Run the React Frontend
 
-In the project directory, you can run:
+In the project directory, you run the command:
 
 #### `npm start`
 
-Runs the app in the development mode.\
+This runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
