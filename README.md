@@ -53,6 +53,8 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Simulation
-When the frontend app is run, the application looks like below <img width="1440" alt="Before Simulation" src="https://user-images.githubusercontent.com/114882302/205470420-73f11878-536b-4482-98f2-b7a9b4bdf67c.png">
+When the frontend app is run, the application looks like below 
+<img width="1100" alt="Before Simulation" src="https://user-images.githubusercontent.com/114882302/205470420-73f11878-536b-4482-98f2-b7a9b4bdf67c.png">
 
-You can enter the metrics as required and then click on `Simulate` to get the results. A sample image is as shown below: <img width="1353" alt="After Simulation" src="https://user-images.githubusercontent.com/114882302/205470537-38423fe2-9a40-4b7d-9f63-04bcae5052c8.png">
+You can enter the metrics as required and then click on `Simulate` to get the results. A sample image is as shown below
+<img width="1100" alt="After Simulation" src="https://user-images.githubusercontent.com/114882302/205470537-38423fe2-9a40-4b7d-9f63-04bcae5052c8.png">
