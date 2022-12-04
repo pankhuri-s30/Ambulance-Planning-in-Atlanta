@@ -63,8 +63,8 @@ const Filters = ({setAmbulanceMapping}) => {
   return (
     <>
     <div >
-    <InputGroup>
-    <InputGroup.Text id="basic-addon1" >Census</InputGroup.Text>
+    {/* <InputGroup> */}
+    {/* <InputGroup.Text id="basic-addon1" >Census</InputGroup.Text>
     <select className="form-select" aria-label="Default select example"
     onChange={(event) => setCountyOption(event.target.value)}
     >    
@@ -74,7 +74,7 @@ const Filters = ({setAmbulanceMapping}) => {
         <option value="Rockdale">Rockdale</option>
         <option value="Fayette">Fayette</option>
     </select>
-    </InputGroup>
+    </InputGroup> */}
       <br />
     <InputGroup>
     <InputGroup.Text id="basic-addon1">Time of Day</InputGroup.Text>
@@ -96,8 +96,8 @@ const Filters = ({setAmbulanceMapping}) => {
     <InputGroup>
         <InputGroup.Text id="basic-addon1">Number of Ambulances</InputGroup.Text>
         <Form.Control
-          placeholder="50"
-          aria-label="50"
+          placeholder="100"
+          aria-label="0"
           aria-describedby="basic-addon1"
           onChange={(event) => setAmbulanceCountOption(event.target.value)}
         />
@@ -114,10 +114,10 @@ const Filters = ({setAmbulanceMapping}) => {
       </InputGroup>
       <br />
       <InputGroup>
-        <InputGroup.Text id="basic-addon1">Total # of Calls Per Day</InputGroup.Text>
+        <InputGroup.Text id="basic-addon1">Total Calls Per Day</InputGroup.Text>
         <Form.Control
-          placeholder="2000"
-          aria-label="2000"
+          placeholder="300"
+          aria-label="300"
           aria-describedby="basic-addon1"
           onChange={(event) => setcallsPerDay(event.target.value)}
         />

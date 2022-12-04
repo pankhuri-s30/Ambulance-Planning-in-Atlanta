@@ -50,7 +50,7 @@ const Results = ({tableData}) => {
   return (
     <>
     
-    <div style={{marginTop: 30}}>
+    <div style={{marginTop: 40}}>
     <h4>Results:</h4>
     <hr />
     {/* <hr /> */}
@@ -59,7 +59,7 @@ const Results = ({tableData}) => {
     <div style={{color: "grey"}}><b>Worst case response time: {toTime(state.tableData?.worst_response_time)}</b></div> 
     </div>
     <br />
-    <div style={{width: 600}}>
+    <div style={{width: 500}}>
     <Table dataSource={dataSources} columns={columns} pagination={{ pageSize: 3 }}/>
     </div>
     </>

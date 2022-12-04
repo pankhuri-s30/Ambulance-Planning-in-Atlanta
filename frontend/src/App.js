@@ -44,7 +44,8 @@ function App() {
       all_hospitals.map( (point) => {
         const json_obj = {
           'lat': point[1],
-          'lng': point[0]
+          'lng': point[0],
+          'name': point[2]
         }
         places.push(json_obj);
 
@@ -68,7 +69,7 @@ function App() {
     <>
     <div>
       <header className='App-header'>Optimizing Ambulance Response Times</header>
-      <div className="float-container">
+      <div >
         <div className="float-child-left">
           <div className='lhs_filters'>
             <Filters setAmbulanceMapping={setAmbulanceMapping}/>
@@ -82,21 +83,6 @@ function App() {
         </div>
       </div>
       </div>
-
-      {/* < hr /> */}
-      {/* <div className='map-container'>
-        <MapsDisplay />
-      </div> */}
-       {/* <div>
-        Shall I add map here?
-        Shall I add map here?
-        Shall I add map here?
-        Shall I add map here?
-      </div> */}
-      {/* <div>
-      
-        <Results />
-      </div> */}
     </div>
     </>
   );
