@@ -1,4 +1,5 @@
 # Visualizing and Optimizing Ambulance Planning in Atlanta
+You can also watch our instruction [video](https://www.youtube.com/watch?v=ChsFcZOENjA) to understand how to setup and run the application
 ## Setup Prerequisites
 ### Download Pre-Processed Data Population
 Navigate to this [link](https://drive.google.com/drive/folders/1cVqRoRTbFaDZaBMS9EDYjCnak8DGYawN?usp=share_link) and download the files in the `data` folder within the `backend/` directory.
