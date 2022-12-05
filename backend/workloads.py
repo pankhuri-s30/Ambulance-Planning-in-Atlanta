@@ -10,12 +10,12 @@ def save_results(file_name, params, mapping):
 
 base_params = [30, 0, 86399, 2000, 5000, 300]
 
-ambulance_workload = [[n] + base_params[1:] for n in range(20, 60, 10)]
-time_workload = [[base_params[0]] + [start_time * 3600, ((start_time + 6) * 3600) - 1] + base_params[3:] for start_time in range(18, 24, 6)]
+ambulance_workload = [[n] + base_params[1:] for n in range(10, 60, 10)]
+time_workload = [[base_params[0]] + [start_time * 3600, ((start_time + 6) * 3600) - 1] + base_params[3:] for start_time in range(0, 24, 6)]
 calls_workload = [base_params[:3] + [n] + base_params[4:] for n in range(500, 2501, 500)]
-runtime_workload = [base_params[:-1] + [n] for n in range(360, 481, 60)]
+runtime_workload = [base_params[:-1] + [n] for n in range(60, 481, 60)]
 
-for workload in [calls_workload]:
+for workload in [ambulance_workload, time_workload, calls_workload, runtime_workload]:
     fname = str(int(time.time())) + '.txt'
     for params in workload:
         print(params)
